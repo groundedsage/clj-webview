@@ -28,7 +28,35 @@
 
   (future (reset! webview-state (webview_create 0 nil)))
 
-  (clojure.repl/doc webview_create)
+  (clojure.repl/doc webview_create) 
+
+
+  ;;;;;;;
+
+  (def status (atom nil)) ; An atom to hold the status of the webview creation.
+  
+  ; A separate thread to monitor the status of the webview creation.
+(future
+  (loop []
+    (if-let [w @status]
+      (println "Webview successfully created:" w)
+      (do
+        (println "Waiting for webview to be created...")
+        (Thread/sleep 3000) 
+        (recur)))))
+
+
+  (let [w (webview_create 0 nil)]
+    (webview_set_title w "Basic Example")
+    (webview_set_size w 100 200 nil)
+    (webview_set_html w "Thanks for using webview!"))
+  
+
+  (reset! status (webview_create 0 nil))
+  
+  (clojure.repl/doc webview_set_size)
+
+
 
 
   (println (webview_navigate))
