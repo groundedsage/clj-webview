@@ -1,4 +1,4 @@
-(ns dev.webview.tech2
+(ns dev.webview.binding
   (:require [tech.v3.datatype.ffi :as dtype-ffi]))
 
 (dtype-ffi/define-library!
@@ -8,14 +8,18 @@
                                 [window :pointer]]}
     :webview_destroy {:rettype :void
                       :argtypes [[webview-instance :pointer]]}
+    
+    ;; :webview_init {}
+    ;; :webview_terminate {}
+    ;; :webview_return {}
+    :webview_version {:rettype :pointer :argtypes []}
+
+
     :webview_run {:rettype :void
                   :argtypes [[webview-instance :pointer]]}
     :webview_eval {:rettype :int32
                    :argtypes [[webview-instance :pointer]
                               [js-str :pointer]]}
-    ;; :webview_set_url {:rettype :void
-    ;;                   :argtypes [[webview-instance :pointer]
-    ;;                              [url :pointer]]}
     :webview_set_title {:rettype :void
                         :argtypes [[webview-instance :pointer]
                                    [title :pointer]]}
@@ -26,12 +30,6 @@
                                   [hints :int32]]}
     :webview_get_window {:rettype :pointer
                          :argtypes [[webview-instance :pointer]]}
-    ;; :webview_dialog {:rettype :void
-    ;;                  :argtypes [[webview-instance :pointer]
-    ;;                             [dialog-type :int32]
-    ;;                             [title :pointer]
-    ;;                             [arg :pointer]
-    ;;                             [result :pointer]]}
     :webview_dispatch {:rettype :void
                        :argtypes [[webview-instance :pointer]
                                   [fn :pointer]
@@ -53,8 +51,12 @@
   nil nil)
 
 
+
+
+
 ;; Instantiate the webview library. Use nil for the current process or provide the path to your dynamic library.
 (defonce webview-instance (dtype-ffi/library-singleton-set! webview-lib "/native/osx/libwebview.dylib"))
+
 
 
 (defn create-webview [debug window]
@@ -90,8 +92,39 @@
 
 (comment 
   
-  (def w (atom nil))
+;; Create the webview instance
+(def w (create-webview 0 nil))
+  ; Execution error at tech.v3.datatype.ffi.ptr-value/ptr-value (ptr_value.clj:29).
+; Pointer value is zero!
+  
+  webview_version
+
+   (keys (ns-publics *ns*))
+  
+  (str (webview_version))
+
+  (webview_create 0 nil)
+  ; Execution error at tech.v3.datatype.ffi.ptr-value/ptr-value (ptr_value.clj:29).
+; Pointer value is zero!
+
+  
+
+  
 
 
-  (future (reset! w (create-webview 1 nil)))
+;; Set the title for the webview
+(set-title-webview w "Basic Example")
+
+;; Set the size for the webview
+(set-size-webview w 480 320 WEBVIEW_HINT_NONE) ; Assuming you have a constant or equivalent for `WEBVIEW_HINT_NONE`
+
+;; Set the HTML content for the webview
+(set-url-webview w "Thanks for using webview!") ; Assuming `set-url-webview` should actually be `set-html-webview` given your library definitions
+
+;; Run the webview
+(run-webview w)
+
+;; Destroy the webview instance after use
+(destroy-webview w)
+
   )

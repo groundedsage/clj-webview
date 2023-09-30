@@ -3,3 +3,5 @@
 .cpcache
 .nrepl-port
 .classes/*
+*.class
+*.cache
