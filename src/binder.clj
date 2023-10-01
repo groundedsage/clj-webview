@@ -34,10 +34,13 @@
   (let [w (webview_create 0 nil)]
     (println "webview created")
     (webview_set_title w "Basic Example")
-    (webview_set_size w 100 200 nil)
-    (webview_set_html w "Thanks for using webview!")))
+    (webview_set_size w 100 200 0)
+    (webview_set_html w "Thanks for using webview!")
+    (webview_run w)))
 
 (comment
+  
+  ;clj -M:webview -m binder
   
   (println (.getName (Thread/currentThread)))
 

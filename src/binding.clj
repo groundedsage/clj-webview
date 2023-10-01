@@ -1,4 +1,4 @@
-(ns dev.webview.binding
+(ns binding
   (:require [tech.v3.datatype.ffi :as dtype-ffi]))
 
 (dtype-ffi/define-library!
@@ -89,6 +89,17 @@
 (defn dispatch-webview [webview fn arg]
   (.webview_dispatch webview-instance webview fn arg))
 
+(defn set-html-webview [webview title]
+  (.webview_set_html webview-instance webview title))
+
+(defn -main [& args]
+  (println "inside binding")
+  (let [w (create-webview 1 nil)]
+    (println "webview created")
+    #_(set-title-webview w "Basic Example")
+    #_(set-size-webview w 100 200 0)
+    #_(set-html-webview w "Thanks for using webview!")
+    #_(run-webview w)))
 
 (comment 
   

@@ -5,6 +5,6 @@
         io.github.humbleui/types$clojure     {:mvn/version "0.1.2"}
         cnuernber/dtype-next {:mvn/version "10.013"}
         com.phronemophobic/clong {:mvn/version "1.1"}}
- :alias {:webview {:jvm-opts ["-Djdk.attach.allowAttachSelf" #_"-XX:+UnlockDiagnosticVMOptions" #_"-XX:+DebugNonSafepoints"
-                              "-XstartOnFirstThread"]}}}
+ :aliases {:webview {:jvm-opts ["-Djdk.attach.allowAttachSelf" #_"-XX:+UnlockDiagnosticVMOptions" #_"-XX:+DebugNonSafepoints"
+                                "-XstartOnFirstThread"]}}}
 
