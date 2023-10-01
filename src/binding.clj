@@ -94,7 +94,7 @@
 
 (defn -main [& args]
   (println "inside binding")
-  (let [w (create-webview 1 nil)]
+  (let [w (create-webview 0 nil)]
     (println "webview created")
     #_(set-title-webview w "Basic Example")
     #_(set-size-webview w 100 200 0)
